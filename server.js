@@ -7,6 +7,9 @@ const app = express();
 const methodOverride = require("method-override");
 const morgan = require("morgan");
 
+//Controllers
+const authCtrl = require('./controllers/auth');
+
 // Set the port from environment variable or default to 3000
 const port = process.env.PORT ? process.env.PORT : "3000";
 
@@ -17,6 +20,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride("_method"));
 // Morgan for logging HTTP requests
 app.use(morgan('dev'));
+
+app.get('/', async (req,res) => {
+  res.render('index.ejs');
+});
+
+app.use('/auth', authCtrl);
 
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);
